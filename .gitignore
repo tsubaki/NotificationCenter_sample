@@ -1,0 +1,63 @@
+### Unity
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+
+*.csproj
+*.unityproj
+*.sln
+
+#Unity User Specific
+*.userprefs
+*.usertasks
+
+#Mono Developer Project Files
+*.pidb
+*.resources
+test-results/
+
+### iOS向けにXcodeプロジェクトを管理する場合(Xcodeのプロジェクト設定が必要な場合がある、とくにPluginを使っている場合、Splashの4inchがなぜか警告がでるので入れ替えたりとか)
+
+# Xcode
+.DS_Store
+*/build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+*.hmap
+
+
+### OSX　Mac用
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+ios/*
+
+#tools
+#Assets/TK2DROOT/*
+#Assets/TK2DROOT.meta
+
+#Assets/Font/*
+
+#Assets/Sound/*
