@@ -7,21 +7,30 @@ public class NotificationObject<T>
 {
 	public delegate void NotificationAction(T t);
 	private T data;
-
+	
 	public NotificationObject(T t)
 	{
 		Value = t;
 	}
-
+	
 	public NotificationObject(){}
-
+	
 	~NotificationObject()
 	{
 		Dispose();
 	}
 	
-	public event NotificationAction changed;
-
+	public event NotificationAction action;
+	public event NotificationAction changed {
+		add {
+			action += value;
+			
+		}
+		remove {
+			action -= value;
+		}
+	}
+	
 	public T Value
 	{
 		get{
@@ -35,12 +44,12 @@ public class NotificationObject<T>
 	
 	private void Notice ()
 	{
-		if (changed != null)
-			changed (data);
+		if (action != null)
+			action (data);
 	}
-
+	
 	public void Dispose ()
 	{
-		changed = null;
+		action = null;
 	}
 }

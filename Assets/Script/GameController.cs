@@ -22,4 +22,5 @@ public class GameController : SingletonMonoBehaviour<GameController>
 		score.Dispose();
 		gameState.Dispose();
 	}
+
 }
