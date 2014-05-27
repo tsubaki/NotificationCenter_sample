@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
+	string preState, afterState;
 
 	void Start ()
 	{
-		ChangeGameState (GameController.Instance.gameState.Value);
-		GameController.Instance.gameState.changed += ChangeGameState;
+		var gameController = GameController.Instance;
+		ChangeGameState(gameController.gameState.Value);
+
+		preState = "add event before: " + gameController.gameState.Value;
+		Debug.Log(preState);
+
+		gameController.gameState.changed += ChangeGameState;
+
+		afterState = "add event after: " + gameController.gameState.Value;
+		Debug.Log(afterState);
 	}
 	
 	void OnDestroy ()
@@ -15,45 +25,11 @@ public class PlayerController : MonoBehaviour {
 			GameController.Instance.gameState.changed -= ChangeGameState;
 	}
 
-	void ChangeGameState (GameController.GameState state)
-	{
-		switch (state) {
-		case GameController.GameState.Title:
-			enabled = false;
-			rigidbody2D.isKinematic = true;
-			break;
-		case GameController.GameState.Play:
-			enabled = true;
-			rigidbody2D.isKinematic = false;
-			break;
-		case GameController.GameState.GameOver:
-			enabled = false;
-			//rigidbody2D.velocity = Vector3.zero;
-			break;
-		}
-	}
+	void ChangeGameState (GameController.GameState state){}
 
-	void OnTriggerEnter2D(Collider2D other)
+	void OnGUI()
 	{
-		GameController.Instance.gameState.Value = GameController.GameState.GameOver;
-		Destroy (this.gameObject);
-	}
-
-	private bool isJumpRequest;
-	
-	void Update ()
-	{
-		if (Input.GetMouseButtonDown (0))
-			isJumpRequest = true;
-	}
-	
-	public float power = 2;
-	
-	void FixedUpdate ()
-	{
-		if (isJumpRequest) {
-			isJumpRequest = false;
-			rigidbody2D.velocity = Vector3.up * power;
-		}
+		GUILayout.Label(preState);
+		GUILayout.Label(afterState);
 	}
 }

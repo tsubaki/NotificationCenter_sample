@@ -2,8 +2,7 @@
 using System.Collections;
 using System;
 
-[System.Serializable]
-public class NotificationObject<T> 
+public class NotificationObject<T> : IDisposable   where T : System.IComparable
 {
 	public delegate void NotificationAction(T t);
 	private T data;
@@ -20,16 +19,7 @@ public class NotificationObject<T>
 		Dispose();
 	}
 	
-	public event NotificationAction action;
-	public event NotificationAction changed {
-		add {
-			action += value;
-			
-		}
-		remove {
-			action -= value;
-		}
-	}
+	public event NotificationAction changed;
 	
 	public T Value
 	{
@@ -37,19 +27,22 @@ public class NotificationObject<T>
 			return data;
 		}
 		set{
-			data = value;
-			Notice ();
+			if( data.CompareTo(value) != 0)
+			{
+				data = value;
+				Notice ();
+			}
 		}
 	}
 	
 	private void Notice ()
 	{
-		if (action != null)
-			action (data);
+		if (changed != null)
+			changed (data);
 	}
 	
 	public void Dispose ()
 	{
-		action = null;
+		changed = null;
 	}
 }
